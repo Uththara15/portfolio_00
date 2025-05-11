@@ -142,20 +142,28 @@ document.addEventListener("DOMContentLoaded", function () {
             description: "A web UI for reviewing and cataloging books.",
             repo: "#"
         },
-        "data-structure project": {
+        "data-structure": {
             name: "Data Structure Project",
             date: "September 2023",
             technology: "Python, Algorithms",
             description: "A project demonstrating various data structures and algorithms.",
             repo: "#"
         },
-        "Expense tracker": {
+        "expense tracker": {
             name: "Web Application",
             date: "November 2023",
             technology: "Angular, Firebase",
             description: "A modern web application with real-time database integration.",
             repo: "https://github.com/Uththara15/expense-tracker"
-        }
+        },
+
+        "titanic-analysis": {
+        name: "Titanic Data Analysis",
+        date: "March 2025",
+        technology: "Python, Pandas, Seaborn, Scikit-learn",
+        description: "Performed EDA, feature engineering, and built classification models (kNN, Random Forest) to predict Titanic passenger survival.",
+        repo: "https://github.com/Uththara15/ML-DA-Project-with-Titanic-Data"
+    },
     };
 
     // Open popup
