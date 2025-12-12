@@ -16,16 +16,21 @@
     new WOW().init();
     
     
-    // Back to top button
-    $(window).scroll(function () {
+    // Back to top button (UPDATED)
+    var $backToTop = $('.back-to-top');
+    
+    $(window).on('scroll', function () {
         if ($(this).scrollTop() > 200) {
-            $('.back-to-top').fadeIn('slow');
+            // add .show class so CSS handles opacity / transform
+            $backToTop.addClass('show');
         } else {
-            $('.back-to-top').fadeOut('slow');
+            $backToTop.removeClass('show');
         }
     });
-    $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+    
+    $backToTop.on('click', function (e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
     
@@ -92,7 +97,6 @@
     });
     
     
-    
     // Portfolio filter
     var portfolioIsotope = $('.portfolio-container').isotope({
         itemSelector: '.portfolio-item',
@@ -106,93 +110,102 @@
     });
 
     // JavaScript to handle popup
-document.addEventListener("DOMContentLoaded", function () {
-    const popupModal = document.getElementById("project-popup");
-    const openPopupButtons = document.querySelectorAll(".open-popup");
-    const closePopupButton = document.querySelector(".close-popup");
-    const repoLink = document.getElementById("popup-repo-link");
+    document.addEventListener("DOMContentLoaded", function () {
+        const popupModal = document.getElementById("project-popup");
+        const openPopupButtons = document.querySelectorAll(".open-popup");
+        const closePopupButton = document.querySelector(".close-popup");
+        const repoLink = document.getElementById("popup-repo-link");
 
-    // Project details (you can customize this data)
-    const projectDetails = {
-        "todo": {
-            name: "Todo Application",
-            date: "January 2023",
-            technology: "React, Node.js, MongoDB",
-            description: "A simple todo application to manage daily tasks.",
-            repo: "https://github.com/Uththara15/todo-app.git"
-        },
-        "real-estate": {
-            name: "Real Estate Website",
-            date: "March 2023",
-            technology: "HTML, CSS, JavaScript, PHP",
-            description: "A website for listing and searching real estate properties.",
-            repo: "https://github.com/Uththara15/real-state.git"
-        },
-        "iot": {
-            name: "IoT Project",
-            date: "May 2023",
-            technology: "Arduino, Raspberry Pi, MQTT",
-            description: "An IoT-based home automation system.",
-            repo: "#"
-        },
-        "book-catalog": {
-            name: "Book Review Web UI",
-            date: "July 2023",
-            technology: "React, Bootstrap, REST API",
-            description: "A web UI for reviewing and cataloging books.",
-            repo: "#"
-        },
-        "data-structure": {
-            name: "Data Structure Project",
-            date: "September 2023",
-            technology: "Python, Algorithms",
-            description: "A project demonstrating various data structures and algorithms.",
-            repo: "#"
-        },
-        "expense tracker": {
-            name: "Web Application",
-            date: "November 2023",
-            technology: "Angular, Firebase",
-            description: "A modern web application with real-time database integration.",
-            repo: "https://github.com/Uththara15/expense-tracker"
-        },
+        // Updated Project details with 8 new projects
+        const projectDetails = {
+            "ai-detection": {
+                name: "AI vs Human Text Detection (Deep Learning)",
+                date: "2025",
+                technology: "LSTM, CNN, GCU, Transformer",
+                description: "Compared LSTM, CNN, GCU and Transformer models to classify 10k texts as AI-generated or human-written.",
+                repo: "https://gitlab.labranet.jamk.fi/project-showcase/ai-human-text-detection"
+            },
+            "voice-analysis": {
+                name: "Voice Analysis (Machine Learning)",
+                date: "2024",
+                technology: "Machine Learning, Audio Processing",
+                description: "Built ML models on audio features to classify and analyse human voice recordings.",
+                repo: "https://gitlab.labranet.jamk.fi/project-showcase/voice-analysis-ml-project"
+            },
+            "expense-tracker": {
+                name: "Expense Tracker (Fullstack)",
+                date: "2025",
+                technology: "Node.js, PostgreSQL, React, JWT",
+                description: "Secure JWT-based expense tracking app with budgets, recurring expenses, and currency conversion.",
+                repo: "https://gitlab.labranet.jamk.fi/project-showcase/expense-tracker-project"
+            },
+            "todo-app": {
+                name: "Todo App",
+                date: "2024",
+                technology: "Fullstack Web Development",
+                description: "Simple CRUD Todo application demonstrating clean API design and basic frontend interaction.",
+                repo: "https://gitlab.labranet.jamk.fi/project-showcase/todo"
+            },
+            "pathfinding": {
+                name: "A* Pathfinding (Algorithms)",
+                date: "2025",
+                technology: "Data Structures & Algorithms, Python",
+                description: "Implemented the A* algorithm to find shortest paths in grid mazes using Manhattan heuristic.",
+                repo: "https://gitlab.labranet.jamk.fi/project-showcase/a-star-pathfinding"
+            },
+            "library-ui": {
+                name: "Jamk Library UI (Figma Prototype)",
+                date: "2025",
+                technology: "Figma, UI/UX Design",
+                description: "Designed an improved JAMK library interface focusing on search, navigation, and mobile usability.",
+                repo: "https://www.figma.com/proto/HqIk4nXKpLrBPf67QrrAjq/Library-Jamk?node-id=72-952&p=f&t=wtTKXIyBpj1ZE9NV-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A2"
+            },
+            "future-factory": {
+                name: "Future Factory Project (Group)",
+                date: "2025",
+                technology: "Project Management, Teamwork",
+                description: "Planned and delivered a real client-facing development project, including project plan, sustainable development aspects, and teamwork in a diverse customer-focused team.",
+                repo: "https://it-ff-2025-t09.pages.labranet.jamk.fi/site/"
+            },
+            "used-car": {
+                name: "Used Car Price Prediction (Group)",
+                date: "2025",
+                technology: "Python, Data Analytics, ML",
+                description: "End-to-end Python data project: preprocessing a large used car dataset, exploratory analysis, building and comparing multiple ML models, and evaluating prediction accuracy with clear result analysis.",
+                repo: "https://gitlab.labranet.jamk.fi/project-showcase/used-car-project"
+            }
+        };
 
-        "titanic-analysis": {
-        name: "Titanic Data Analysis",
-        date: "March 2025",
-        technology: "Python, Pandas, Seaborn, Scikit-learn",
-        description: "Performed EDA, feature engineering, and built classification models (kNN, Random Forest) to predict Titanic passenger survival.",
-        repo: "https://github.com/Uththara15/ML-DA-Project-with-Titanic-Data"
-    },
-    };
+        // Open popup
+        openPopupButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const projectId = this.getAttribute("data-project");
+                if (projectDetails[projectId]) {
+                    const project = projectDetails[projectId];
 
-    // Open popup
-    openPopupButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            const projectId = this.getAttribute("data-project");
-            const project = projectDetails[projectId];
+                    document.getElementById("popup-project-name").textContent = project.name;
+                    document.getElementById("popup-date").textContent = project.date;
+                    document.getElementById("popup-technology").textContent = project.technology;
+                    document.getElementById("popup-description").textContent = project.description;
+                    repoLink.href = project.repo;
 
-            document.getElementById("popup-project-name").textContent = project.name;
-            document.getElementById("popup-date").textContent = project.date;
-            document.getElementById("popup-technology").textContent = project.technology;
-            document.getElementById("popup-description").textContent = project.description;
-            repoLink.href = project.repo;
+                    popupModal.style.display = "block";
+                }
+            });
+        });
 
-            popupModal.style.display = "block";
+        // Close popup
+        if (closePopupButton) {
+            closePopupButton.addEventListener("click", function () {
+                popupModal.style.display = "none";
+            });
+        }
+
+        // Close popup when clicking outside the modal
+        window.addEventListener("click", function (event) {
+            if (event.target === popupModal) {
+                popupModal.style.display = "none";
+            }
         });
     });
-
-    // Close popup
-    closePopupButton.addEventListener("click", function () {
-        popupModal.style.display = "none";
-    });
-
-    // Close popup when clicking outside the modal
-    window.addEventListener("click", function (event) {
-        if (event.target === popupModal) {
-            popupModal.style.display = "none";
-        }
-    });
-});
 })(jQuery);
-
